@@ -1012,16 +1012,17 @@
 
 		display-timings {
 			t_lvds: t_lvds_default {
-				/* AUO  by default */
-				clock-frequency = <74250000>;
+				/* Innolux g156hce */
+				clock-frequency = <141860000>;
 				hactive = <1920>;
 				vactive = <1080>;
-				hback-porch = <182>;
+				hback-porch = <90>;
 				hfront-porch = <90>;
-				vback-porch = <24>;
-				vfront-porch = <18>;
-				hsync-len = <8>;
-				vsync-len = <3>;
+				vback-porch = <10>;
+				vfront-porch = <10>;
+				hsync-len = <30>;
+				vsync-len = <10>;
+				de-active = <1>;
 			};
 		};
 	};
