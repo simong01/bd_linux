@@ -40,11 +40,11 @@
 		brightness-levels = <0 1 2 3 4 5 6 7 8 9 10>;
 		compatible = "pwm-backlight";
 		default-brightness-level = <8>;
-		enable-gpios = <&gpio4 3 GPIO_ACTIVE_HIGH>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_backlight_lvds>;
+		//enable-gpios = <&gpio4 3 GPIO_ACTIVE_HIGH>;
+		//pinctrl-names = "default";
+		//pinctrl-0 = <&pinctrl_backlight_lvds>;
 		pwms = <&pwm1 0 100000 0>;
-		status = "disabled";
+		status = "okay";
 	};
 
 	chosen {
@@ -1007,11 +1007,22 @@
 	lvds-channel@0 {
 		status = "okay";
 		backlight = <&backlight_lvds>;
-		fsl,data-mapping = "jeida";
+		fsl,data-mapping = "spwg";
 		fsl,data-width = <24>;
 
 		display-timings {
 			t_lvds: t_lvds_default {
+				/* AUO  by default */
+				clock-frequency = <74250000>;
+				hactive = <1920>;
+				vactive = <1080>;
+				hback-porch = <182>;
+				hfront-porch = <90>;
+				vback-porch = <24>;
+				vfront-porch = <18>;
+				hsync-len = <8>;
+				vsync-len = <3>;
+#if 0
 				/* Innolux g156hce */
 				clock-frequency = <141860000>;
 				hactive = <1920>;
@@ -1023,6 +1034,7 @@
 				hsync-len = <30>;
 				vsync-len = <10>;
 				de-active = <1>;
+#endif
 			};
 		};
 	};
