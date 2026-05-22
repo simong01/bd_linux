@@ -789,6 +789,7 @@ dtb-$(CONFIG_ARCH_MXC) += imx91-lme-mycal.dtb \
 			  imx91-nitrogen-smarc.dtb \
 			  imx91-nitrogen-smarc-nx611.dtb \
 			  imx91-nitrogen-smarc-ti351.dtb \
+			  imx91-tap2id.dtb \
 
 dtb-$(CONFIG_ARCH_MXC) += imx95-nitrogen-smarc.dtb \
 
