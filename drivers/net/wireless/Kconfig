@@ -16,11 +16,33 @@ menuconfig WLAN
 
 	  https://wireless.wiki.kernel.org/en/users/Drivers
 
+	config BCMDHD103
+		bool "WLAN_BCMDHD103"
+		default n
+
+	config BCMDHD591
+		bool "WLAN_BCMDHD591"
+		default n
+
+	config BCMDHD361
+		bool "WLAN_BCMDHD361"
+		default n
+
 if WLAN
 
 source "drivers/net/wireless/admtek/Kconfig"
 source "drivers/net/wireless/ath/Kconfig"
 source "drivers/net/wireless/atmel/Kconfig"
+source "drivers/net/wireless/bcmdhd/Kconfig"
+if WLAN_BCMDHD103
+source "drivers/net/wireless/bcmdhd103/Kconfig"
+endif
+if WLAN_BCMDHD591
+source "drivers/net/wireless/bcmdhd591/Kconfig"
+endif
+if WLAN_BCMDHD361
+source "drivers/net/wireless/bcmdhd361/Kconfig"
+endif
 source "drivers/net/wireless/broadcom/Kconfig"
 source "drivers/net/wireless/cisco/Kconfig"
 source "drivers/net/wireless/intel/Kconfig"
