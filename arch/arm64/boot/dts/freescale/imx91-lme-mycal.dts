@@ -298,14 +298,19 @@
 		fsl,pins = <
 			MX91_PAD_ENET1_RD1__GPIO4_IO11			0x31e /* LCD_RSTn */
 			MX91_PAD_ENET1_TXC__GPIO4_IO7			0x31e /* LCD_CS / CS_ID1 */
-			MX91_PAD_I2C1_SDA__GPIO1_IO1			0x31e /* SDIN_ID2 */
-			MX91_PAD_I2C1_SCL__GPIO1_IO0			0x31e /* SCK_ID3 */
 		>;
 	};
 
 	pinctrl_lcd1_pwm: lcd1pwmgrp {
 		fsl,pins = <
 			MX91_PAD_UART2_RXD__TPM1_CH2			0x31e /* LCD1_BKLT_PWM */
+		>;
+	};
+
+	pinctrl_lpi2c1: lpi2c1grp {
+		fsl,pins = <
+			MX91_PAD_I2C1_SCL__LPI2C1_SCL				0x40000b9e /* SCK_ID3 */
+			MX91_PAD_I2C1_SDA__LPI2C1_SDA				0x40000b9e /* SDIN_ID2 */
 		>;
 	};
 
@@ -494,6 +499,16 @@
 
 &lcdif {
 	assigned-clock-rates = <300000000>, <30000000>, <333333334>, <133333333>;
+	status = "okay";
+};
+
+&lpi2c1 { /* LCD I2C */
+	#address-cells = <1>;
+	#size-cells = <0>;
+	clock-frequency = <400000>;
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&pinctrl_lpi2c1>;
+	pinctrl-1 = <&pinctrl_lpi2c1>;
 	status = "okay";
 };
 
