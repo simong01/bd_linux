@@ -44,10 +44,9 @@
 
 	backlight: backlight {
 		compatible = "pwm-backlight";
-		pwms = <&tpm1 2 40000 PWM_POLARITY_INVERTED>;	/* LCD1_BKLT_PWM 25KHz PWM */
-		brightness-levels = <0 100>;
-		num-interpolated-steps = <100>;
-		default-brightness-level = <80>;
+		pwms = <&tpm1 2 10000000 PWM_POLARITY_INVERTED>;	/* LCD1_BKLT_PWM 100Hz PWM */
+		brightness-levels = <0 800 1000 3000 8000 16000 25000 40000 65535>;
+		default-brightness-level = <8>;
 		power-supply = <&reg_vref_5v0>;
 	};
 
