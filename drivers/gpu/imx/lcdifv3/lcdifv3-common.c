@@ -272,7 +272,8 @@ int lcdifv3_set_pix_fmt(struct lcdifv3_soc *lcdifv3, u32 format)
 		break;
 	case DRM_FORMAT_ARGB8888:
 	case DRM_FORMAT_XRGB8888:
-		ctrldescl0_5 |= CTRLDESCL0_5_BPP(BPP32_ARGB8888);
+		/* Farsh HACK for backward LCD connection */
+		ctrldescl0_5 |= CTRLDESCL0_5_BPP(BPP32_ABGR8888);
 		break;
 	case DRM_FORMAT_ABGR8888:
 	case DRM_FORMAT_XBGR8888:
