@@ -44,19 +44,45 @@
 
 	backlight: backlight {
 		compatible = "pwm-backlight";
-		pwms = <&tpm1 2 10000000 PWM_POLARITY_INVERTED>;	/* LCD1_BKLT_PWM 100Hz PWM */
+		// pwms = <&tpm1 2 10000000 PWM_POLARITY_INVERTED>;        /* LCD1_BKLT_PWM 100Hz PWM */
+		pwms = <&tpm1 2 500000 PWM_POLARITY_INVERTED>;	/* LCD1_BKLT_PWM 2KHz PWM */
 		brightness-levels = <0 800 1000 3000 8000 16000 25000 40000 65535>;
 		default-brightness-level = <8>;
 		power-supply = <&reg_vref_5v0>;
 	};
 
 	panel {
-		compatible = "tianma,tm050rdh03";
+		compatible = "powertip,ph800480t036-zhc05", "panel-dpi";
 		backlight = <&backlight>;
 		power-supply = <&reg_vdd_3v3>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_lcd1_gpio>;
 		standby-gpios = <&gpio4 11 GPIO_ACTIVE_LOW>;    /* LCD_RSTn */
+		height-mm = <136>;
+		width-mm = <217>;
+
+		panel-timing {
+			clock-frequency = <25000000>;
+
+			hactive = <800>;
+			vactive = <480>;
+
+			hback-porch = <8>;     /* Thbp Typ */
+			hfront-porch = <8>;    /* Thfp Typ */
+			hsync-len = <4>;       /* Thw Typ */
+
+			vback-porch = <16>;    /* Tvbp Typ */
+			vfront-porch = <16>;   /* Tvfp Typ */
+			vsync-len = <4>;       /* Tvw Typ */
+
+			/* Signal Polarities (Page 13)
+			 * 0 = Active Low / Negative, 1 = Active High / Positive
+			 */
+			hsync-active = <0>;    /* HSYNC polarity: negative */
+			vsync-active = <0>;    /* VSYNC polarity: negative */
+			de-active = <1>;       /* DE: Active High to enable data input */
+			pixelclk-active = <0>; /* DCLK polarity: negative (drive on falling edge) */
+		};
 
 		port {
 			panel_in: endpoint {
@@ -520,19 +546,16 @@
 	pinctrl-1 = <&pinctrl_lpi2c2>;
 	status = "okay";
 
-	/* TODO CTP / Touch */
-	/* 0x5d or 0x14 */
-	ts_goodix: touchscreen@14 {
-		compatible = "goodix,gt9271";
+	/* Touch */
+	ts_focal: touchscreen@38 {
+		compatible = "edt,edt-ft5406";
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_ts>;
-		AVDD28-supply = <&reg_vref_1v8>; /* Real supply is on the display */
-		VDDIO-supply = <&reg_vref_1v8>;
-		esd-recovery-timeout-ms = <2000>;
-		interrupts-extended = <&gpio2 28 IRQ_TYPE_EDGE_RISING>;
-		irq-gpios = <&gpio2 28 GPIO_ACTIVE_HIGH>; /* CTP_nINT */
-		reg = <0x14>;
+		interrupts-extended = <&gpio2 28 IRQ_TYPE_EDGE_RISING>; /* CTP_nINT */
+		reg = <0x38>;
 		reset-gpios = <&gpio2 29 GPIO_ACTIVE_HIGH>; /* CTP_RST */
+		touchscreen-size-x = <800>;
+		touchscreen-size-y = <480>;
 		status = "okay";
 	};
 
