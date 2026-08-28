@@ -44,8 +44,7 @@
 
 	backlight: backlight {
 		compatible = "pwm-backlight";
-		// pwms = <&tpm1 2 10000000 PWM_POLARITY_INVERTED>;        /* LCD1_BKLT_PWM 100Hz PWM */
-		pwms = <&tpm1 2 500000 PWM_POLARITY_INVERTED>;	/* LCD1_BKLT_PWM 2KHz PWM */
+		pwms = <&tpm1 2 10000000 0>;	/* LCD1_BKLT_PWM 100Hz PWM */
 		brightness-levels = <0 800 1000 3000 8000 16000 25000 40000 65535>;
 		default-brightness-level = <8>;
 		power-supply = <&reg_vref_5v0>;
@@ -63,25 +62,18 @@
 
 		panel-timing {
 			clock-frequency = <25000000>;
-
 			hactive = <800>;
 			vactive = <480>;
-
-			hback-porch = <8>;     /* Thbp Typ */
-			hfront-porch = <8>;    /* Thfp Typ */
-			hsync-len = <4>;       /* Thw Typ */
-
-			vback-porch = <16>;    /* Tvbp Typ */
-			vfront-porch = <16>;   /* Tvfp Typ */
-			vsync-len = <4>;       /* Tvw Typ */
-
-			/* Signal Polarities (Page 13)
-			 * 0 = Active Low / Negative, 1 = Active High / Positive
-			 */
-			hsync-active = <0>;    /* HSYNC polarity: negative */
-			vsync-active = <0>;    /* VSYNC polarity: negative */
-			de-active = <1>;       /* DE: Active High to enable data input */
-			pixelclk-active = <0>; /* DCLK polarity: negative (drive on falling edge) */
+			hback-porch = <8>;
+			hfront-porch = <8>;
+			hsync-len = <4>;
+			vback-porch = <16>;
+			vfront-porch = <16>;
+			vsync-len = <4>;
+			hsync-active = <0>;
+			vsync-active = <0>;
+			de-active = <1>;
+			pixelclk-active = <1>;
 		};
 
 		port {
@@ -553,7 +545,7 @@
 		pinctrl-0 = <&pinctrl_ts>;
 		interrupts-extended = <&gpio2 28 IRQ_TYPE_EDGE_RISING>; /* CTP_nINT */
 		reg = <0x38>;
-		reset-gpios = <&gpio2 29 GPIO_ACTIVE_HIGH>; /* CTP_RST */
+		reset-gpios = <&gpio2 29 GPIO_ACTIVE_LOW>; /* CTP_RST */
 		touchscreen-size-x = <800>;
 		touchscreen-size-y = <480>;
 		status = "okay";
