@@ -201,6 +201,13 @@
 		gpios = <3 GPIO_ACTIVE_HIGH>;
 		output-low;
 	};
+
+	/* Force this line to be an input */
+	edt_irq_direction_force {
+		gpio-hog;
+		gpios = <28 GPIO_ACTIVE_LOW>;
+		input;
+	};
 };
 
 &gpio4 {
@@ -353,7 +360,7 @@
 
 	pinctrl_ts: tsgrp {
 		fsl,pins = <
-			MX91_PAD_GPIO_IO28__GPIO2_IO28			0x31e /* CTP_nINT */
+			MX91_PAD_GPIO_IO28__GPIO2_IO28			0x1102 /* CTP_nINT */
 			MX91_PAD_GPIO_IO29__GPIO2_IO29			0x31e /* CTP_RST */
 		>;
 	};
@@ -543,7 +550,7 @@
 		compatible = "edt,edt-ft5406";
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_ts>;
-		interrupts-extended = <&gpio2 28 IRQ_TYPE_EDGE_RISING>; /* CTP_nINT */
+		interrupts-extended = <&gpio2 28 IRQ_TYPE_LEVEL_LOW>; /* CTP_nINT */
 		reg = <0x38>;
 		reset-gpios = <&gpio2 29 GPIO_ACTIVE_LOW>; /* CTP_RST */
 		touchscreen-size-x = <800>;
