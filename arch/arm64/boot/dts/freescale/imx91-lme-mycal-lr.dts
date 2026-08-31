@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright 2026 Ezurio
+ */
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pwm/pwm.h>
+#include "imx91-lme-mycal.dts"
+
+/ {
+	model = "LME Mycal 4.3 480x272";
+
+	panel {
+		compatible = "forwardview,fvt480272t017-zbc13", "panel-dpi";
+		backlight = <&backlight>;
+		power-supply = <&reg_vdd_3v3>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lcd1_gpio>;
+		standby-gpios = <&gpio4 11 GPIO_ACTIVE_LOW>;    /* LCD_RSTn */
+		height-mm = <54>;
+		width-mm = <95>;
+
+		panel-timing {
+			clock-frequency = <9000000>;
+			hactive = <480>;
+			vactive = <272>;
+			hback-porch = <43>;
+			hfront-porch = <8>;
+			hsync-len = <4>;
+			vback-porch = <12>;
+			vfront-porch = <8>;
+			vsync-len = <4>;
+			hsync-active = <0>;
+			vsync-active = <0>;
+			de-active = <1>;
+			pixelclk-active = <1>;
+		};
+
+		port {
+			panel_in: endpoint {
+				remote-endpoint = <&display_out>;
+			};
+		};
+	};
+
+};
